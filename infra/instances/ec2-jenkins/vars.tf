@@ -39,5 +39,5 @@ variable INSTANCE_TYPE {
 
 variable INSTANCE_USERNAME {
 	type = string
-	default = "ec2-user"
+	default = "centos"
 }
