@@ -15,6 +15,8 @@ variable "SG_NAME" {
 
 variable "INGRESS_RULE" {}
 
+variable "EGRESS_RULE" {}
+
 variable "AMIS" {
 	type = map
 	default = {
