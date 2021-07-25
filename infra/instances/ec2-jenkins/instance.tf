@@ -13,11 +13,11 @@ resource "aws_instance" "manager" {
 		source = "jenkins-install.sh"
 		destination = "/tmp/jenkins-install.sh"
 	}
-
 	provisioner "remote-exec" {
 		inline = [
 			"chmod +x /tmp/jenkins-install.sh",
-			"sudo /tmp/jenkins-install.sh"
+			"sudo /tmp/jenkins-install.sh",
+			"mkdir finished"
 		]
 	}
 	
