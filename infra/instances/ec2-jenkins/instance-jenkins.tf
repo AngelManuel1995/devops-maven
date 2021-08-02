@@ -10,14 +10,24 @@ resource "aws_instance" "manager" {
   security_groups = [ aws_security_group.ssh_connection.name ]
 
 	provisioner "file" {
-		source      = "jenkins-install.sh"
+    	source      = "scripts/.bash_profile"
+    	destination = "/tmp/.bash_profile"
+  	}
+
+	provisioner "file" {
+		source      = "scripts/java-jdk-installation.sh"
+		destination = "/tmp/java-jdk-installation.sh"
+	}
+	provisioner "file" {
+		source      = "scripts/jenkins-install.sh"
 		destination = "/tmp/jenkins-install.sh"
 	}
 	provisioner "remote-exec" {
 		inline = [
+			"chmod +x /tmp/java-jdk-installation.sh",
+			"sudo /tmp/java-jdk-installation.sh",
 			"chmod +x /tmp/jenkins-install.sh",
 			"sudo /tmp/jenkins-install.sh",
-			"mkdir finished"
 		]
 	}
 	

@@ -13,6 +13,14 @@ resource "aws_instance" "tomcat_service_1" {
   }
 
   provisioner "file" {
+    source      = "tomcat-conf-files/.bash_profile"
+    destination = "/tmp/.bash_profile"
+  }
+  provisioner "file" {
+    source      = "scripts/java-jdk-installation.sh"
+    destination = "/tmp/java-jdk-installation.sh"
+  }
+  provisioner "file" {
     source      = "tomcat-conf-files/users/tomcat-users.xml"
     destination = "/tmp/users/tomcat-users.xml"
   }
@@ -25,12 +33,14 @@ resource "aws_instance" "tomcat_service_1" {
     destination = "/tmp/manager/context.xml"
   }
   provisioner "file" {
-    source      = "tomcat-install.sh"
+    source      = "scripts/tomcat-install.sh"
     destination = "/tmp/tomcat-install.sh"
   }
 
   provisioner "remote-exec" {
     inline = [
+      "chmod +x /tmp/java-jdk-installation.sh",
+      "sudo /tmp/java-jdk-installation.sh",
       "chmod +x /tmp/tomcat-install.sh",
       "sudo /tmp/tomcat-install.sh"
     ]
